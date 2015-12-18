@@ -1,4 +1,5 @@
 <?php
+
 class Controller_Article extends Controller
 {
 
@@ -10,54 +11,45 @@ class Controller_Article extends Controller
 
     function action_index()
     {
-        if($this->params['param_name']=='id' && $this->params['param_value']>=0)
-        {
-            $data = $this->model->get_data($this->params['param_value']);
-            $this->view->generate('article/article', array('article' => $data, 'edit' => 1));
-        }
-        else
-        {
+        if (!empty($this->params['id'])) {
+            $data = $this->model->get_data($this->params['id']);
+            $this->view->generate('article/article', array('article' => $data->fetchAll(), 'edit' => 1));
+        } else {
             $data = $this->model->get_data();
-            $this->view->generate('article/article', array('article' => $data));
+            $this->view->generate('article/article', array('article' => $data->fetchAll()));
         }
     }
 
     function action_add()
     {
-        if($this->params['add'])
-        {
+        if (!empty($this->params['add'])) {
             $this->model->add_data($this->params);
             $data = $this->model->get_data();
             $this->view->generate('article/article', array('article' => $data));
-        }
-        else
-        {
+        } else {
             $this->view->generate('article/article_add');
         }
     }
 
     function action_update()
     {
-        echo '<pre>'; print_r($this->params); echo '</pre>';
-        if ($this->params['param_name']=='id' && $this->params['param_value']>=0 && $this->params['update']!=1) {
-            $data =  $this->model->get_data($this->params['param_value']);
-            $this->view->generate('article/article_update',array('article' =>$data));
+        if (!empty($this->params['id'])) {
+            if (!empty($this->params['update'])) {
+                $this->model->update_data($this->params);
+                $data = $this->model->get_data();
+                $this->view->generate('article/article', array('article' => $data->fetchAll()));
+            } else {
+                $data = $this->model->get_data($this->params['id']);
+                $this->view->generate('article/article_update', array('article' => $data->fetchAll()));
+            }
         }
-        if ($this->params['update'])
-        {
-            $this->model->update_data($this->params);
-            $data = $this->model->get_data();
-            $this->view->generate('article/article', array('article' => $data));
-        }
-
     }
 
     function action_delete()
     {
-        if ($this->params['param_name']=='id' && $this->params['param_value']>=0) {
-            $this->model->delete_data($this->params['param_value']);
-            $data = $this->model->get_data();
-            $this->view->generate('article/article', array('article' =>$data));
+        if (!empty($this->params['id'])) {
+            $this->model->delete_data($this->params['id']);
+            $this->redirect('article');
         }
 
     }

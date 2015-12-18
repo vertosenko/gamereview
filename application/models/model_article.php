@@ -27,23 +27,21 @@ class Model_Article extends Model
     public function update_data($data)
     {
         $sql = "UPDATE article SET title = :title , text = :text WHERE id = :id";
-
         $stmt = $this->db->pdo->prepare($sql);
 
         $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
         $stmt->bindParam(':title', $data['title'], PDO::PARAM_STR);
         $stmt->bindParam(':text', $data['text'], PDO::PARAM_STR);
-
         return $stmt->execute();
     }
 
-    public function delete_data($data)
+    public function delete_data($id)
     {
         $sql = "DELETE FROM article WHERE id = :id";
 
         $stmt = $this->db->pdo->prepare($sql);
 
-        $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
 
         return $stmt->execute();

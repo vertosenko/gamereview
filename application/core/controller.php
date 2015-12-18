@@ -15,7 +15,6 @@ class Controller {
         $this->action = $action;
         $this->params = $params;
 
-        //
         $this->params = $this->params + $_REQUEST;
     }
 
@@ -23,5 +22,17 @@ class Controller {
     function action_index()
     {
         // todo
+    }
+
+    /**
+     * Redirect to needed url
+     *
+     * @param $path 'index/index'
+     * @param string $msg
+     */
+     public function redirect($path = '', $msg = '') {
+        //$msg - @TODO: in the future
+        header('Location: /'. $path);
+        exit();
     }
 }

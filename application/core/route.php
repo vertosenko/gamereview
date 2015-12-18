@@ -8,7 +8,7 @@
 class Route
 {
 
-    static function start()
+    static public function start()
     {
         // контроллер и действие по умолчанию
         $controller_name = 'index';
@@ -30,15 +30,13 @@ class Route
         }
 
         // получаем param_name
-        if ( !empty($routes[3]) )
-        {
-            $param['param_name'] = $routes[3];
-        }
+        $params = array();
 
-        // получаем param_value
-        if ( !empty($routes[4]) )
+        if ( !empty($routes[3]) && !empty($routes[4]) )
         {
-            $param['param_value']= $routes[4];
+            $params = array(
+                $routes[3] => $routes[4]
+            );
         }
 
         // добавляем префиксы
@@ -82,7 +80,7 @@ class Route
 
         // создаем контроллер
 
-        $controller = new $controller_name($controller_name,$action_name, $param);
+        $controller = new $controller_name($controller_name,$action_name, $params);
         $action = $action_name;
         $tmp = $controller->params;
 
@@ -100,7 +98,7 @@ class Route
 
     }
 
-    function ErrorPage404()
+    public function ErrorPage404()
     {
         $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
         header('HTTP/1.1 404 Not Found');
