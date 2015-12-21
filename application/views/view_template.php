@@ -52,7 +52,7 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                        <a class="navbar-brand" href="#">Home</a>
+                    <a class="navbar-brand" href="#">Home</a>
 
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
@@ -60,15 +60,15 @@
                         <li class="active"><a href="/index/index">Home</a></li>
                         <li><a href="/article/index">Article </a></li>
                         <li><a href="/gallery/index">Gallery</a></li>
-                        <?php// if(isLogIn()) : ?>
-                            <li><a href="/links/links">Links</a></li>
+                        <?php // if(isLogIn()) : ?>
+                        <li><a href="/links/links">Links</a></li>
                         <?php //endif; ?>
                         <?php //if(isAdmin()) :?>
-                            <li><a href="/users/users">Users</a></li>
+                        <li><a href="/users/users">Users</a></li>
                         <?php //endif; ?>
 
                         <?php //if (!empty($_SESSION['name'])) : ?>
-                            <!--<li><a href="login.php?op=logout">Logout</a></li>
+                        <!--<li><a href="login.php?op=logout">Logout</a></li>
                         <?php //else : ?>
                             <li><a href="login.php?op=login">Login</a></li> -->
                         <?php //endif; ?>
@@ -77,11 +77,13 @@
                 </div>
             </div>
         </nav>
-
     </div>
+    <div class="container">
+        <?php include 'application/views/' . $content_view . '.php'; ?>
+    </div>
+
 </div>
-<div class="container marketing">
-<?php include 'application/views/'.$content_view . '.php'; ?>
+
 </body>
 </html>
 

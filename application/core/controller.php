@@ -1,27 +1,55 @@
 <?php
+require_once 'User.php';
 
-class Controller {
 
+abstract class Controller
+{
     public $model;
     public $view;
     public $controller;
     public $action;
     public $params;
 
-    function __construct($controller, $action, $params = null)
+    protected $user;
+    protected $rules = array();
+
+    public function __construct($controller, $action, $params = null)
     {
         $this->view = new View();
         $this->controller = $controller;
         $this->action = $action;
-        $this->params = $params;
 
+        //set params + GET + POST
+        $this->params = $params;
         $this->params = $this->params + $_REQUEST;
+
+        //user details
+        $this->user = new User();
+        $this->rules();
+    }
+
+    /**
+     * @return mixed
+     */
+    abstract protected function rules();
+
+    /**
+     * Check access
+     *
+     * @return bool
+     */
+    public function checkRules()
+    {
+        foreach ($this->rules as $action => $role) {
+            if ($this->action == 'action_' . $action && $this->user->getRole() >= $role) {
+                return true;
+            }
+        }
     }
 
     // действие (action), вызываемое по умолчанию
-    function action_index()
+    public function action_index()
     {
-        // todo
     }
 
     /**
@@ -30,9 +58,10 @@ class Controller {
      * @param $path 'index/index'
      * @param string $msg
      */
-     public function redirect($path = '', $msg = '') {
+    public function redirect($path = '', $msg = '')
+    {
         //$msg - @TODO: in the future
-        header('Location: /'. $path);
+        header('Location: /' . $path);
         exit();
     }
 }

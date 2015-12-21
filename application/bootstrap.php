@@ -1,4 +1,6 @@
 <?php
+session_start();
+date_default_timezone_set('America/Los_Angeles');
 
 // подключаем файлы ядра
 require_once '/../config.php';

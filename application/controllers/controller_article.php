@@ -3,11 +3,13 @@
 class Controller_Article extends Controller
 {
 
-    function __construct($controller, $action, $params)
+    function rules()
     {
-        parent::__construct($controller, $action, $params);
-        $this->model = new Model_Article();
+        $this->rules = array(
+            'index' => 1,
+        );
     }
+
 
     function action_index()
     {

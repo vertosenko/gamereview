@@ -7,7 +7,6 @@
 */
 class Route
 {
-
     static public function start()
     {
         // контроллер и действие по умолчанию
@@ -79,16 +78,20 @@ class Route
         }
 
         // создаем контроллер
-
         $controller = new $controller_name($controller_name,$action_name, $params);
+        $controller->model = new $model_name();
+
         $action = $action_name;
         $tmp = $controller->params;
 
-
         if(method_exists($controller, $action))
         {
-            // вызываем действие контроллера
-            $controller->$action();
+           if ($controller->checkRules()) {
+               // вызываем действие контроллера
+               $controller->$action();
+           } else {
+               $controller->redirect('user/login', '');
+           }
         }
         else
         {
@@ -105,5 +108,4 @@ class Route
         header("Status: 404 Not Found");
         header('Location:'.$host.'404');
     }
-
 }

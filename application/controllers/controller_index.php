@@ -1,4 +1,5 @@
 <?php
+
 class Controller_Index extends Controller
 {
 
@@ -6,6 +7,13 @@ class Controller_Index extends Controller
     {
         $this->model = new Model_Index();
         $this->view = new View();
+    }
+
+    function rules()
+    {
+        $this->rules = array(
+            'index' => 0,
+        );
     }
 
     function action_index()
