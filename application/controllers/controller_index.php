@@ -3,22 +3,11 @@
 class Controller_Index extends Controller
 {
 
-    function __construct()
-    {
-        $this->model = new Model_Index();
-        $this->view = new View();
-    }
-
-    function rules()
-    {
-        $this->rules = array(
-            'index' => 0,
-        );
-    }
-
     function action_index()
     {
         $data = $this->model->get_data();
-        $this->view->generate('index/index', $data);
+        $this->view->generateToolBar($this->tollBarArray,$this->user->getRole());
+        $this->view->generate('index/index', array('article' =>$data));
     }
+
 }

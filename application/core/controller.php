@@ -1,8 +1,8 @@
 <?php
-require_once 'User.php';
+require_once 'user.php';
+require_once 'menu.php';
 
-
-abstract class Controller
+class Controller
 {
     public $model;
     public $view;
@@ -11,6 +11,8 @@ abstract class Controller
     public $params;
 
     protected $user;
+    protected $menu;
+    protected $tollBarArray = array();
     protected $rules = array();
 
     public function __construct($controller, $action, $params = null)
@@ -25,13 +27,22 @@ abstract class Controller
 
         //user details
         $this->user = new User();
+        $this->menu = new Menu();
         $this->rules();
+        $this->toolBar();
     }
 
     /**
      * @return mixed
      */
-    abstract protected function rules();
+    protected function rules() {
+        $this->rules = $this->menu->prepare_rules($this->controller);
+        echo 0;
+    }
+
+    protected function toolBar(){
+        $this->tollBarArray = $this->menu->display_menu();
+    }
 
     /**
      * Check access

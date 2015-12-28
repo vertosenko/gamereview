@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>GameReview</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -28,6 +28,16 @@
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
 
+    <!--<script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>-->
+    <!--<script src="../../js/ckeditor/ckeditor.js"></script>
+    <script src="../../js/ckeditor-custom.js"></script>
+    <script>
+        jQuery('document').ready(function() {
+            initSample();
+        });
+    </script>-->
+
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -35,6 +45,10 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+    <!-- dynamic custom scripts and styles-->
+    <?php echo $this->styles; ?>
+    <?php echo $this->scripts; ?>
 </head>
 </head>
 <body>
@@ -42,7 +56,7 @@
     <div class="container">
 
         <nav class="navbar navbar-inverse ">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                             data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -52,11 +66,12 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <a class="navbar-brand" href="#">Home</a>
+                    <a class="navbar-brand" href="#">GameReview</a>
 
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                   <!--
+                   <ul class="nav navbar-nav">
                         <li class="active"><a href="/index/index">Home</a></li>
                         <li><a href="/article/index">Article </a></li>
                         <li><a href="/gallery/index">Gallery</a></li>
@@ -70,9 +85,14 @@
                         <?php //if (!empty($_SESSION['name'])) : ?>
                         <!--<li><a href="login.php?op=logout">Logout</a></li>
                         <?php //else : ?>
-                            <li><a href="login.php?op=login">Login</a></li> -->
+                            <li><a href="login.php?op=login">Login</a></li>
                         <?php //endif; ?>
 
+                    </ul>
+                    -->
+                    <?php echo $this->toolBarList?>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/user/login">login</a></li>
                     </ul>
                 </div>
             </div>
@@ -86,5 +106,3 @@
 
 </body>
 </html>
-
-

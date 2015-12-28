@@ -3,21 +3,15 @@
 class Controller_Article extends Controller
 {
 
-    function rules()
-    {
-        $this->rules = array(
-            'index' => 1,
-        );
-    }
-
-
     function action_index()
     {
         if (!empty($this->params['id'])) {
             $data = $this->model->get_data($this->params['id']);
+            $this->view->generateToolBar($this->tollBarArray,$this->user->getRole());
             $this->view->generate('article/article', array('article' => $data->fetchAll(), 'edit' => 1));
         } else {
             $data = $this->model->get_data();
+            $this->view->generateToolBar($this->tollBarArray,$this->user->getRole());
             $this->view->generate('article/article', array('article' => $data->fetchAll()));
         }
     }
@@ -29,6 +23,8 @@ class Controller_Article extends Controller
             $data = $this->model->get_data();
             $this->view->generate('article/article', array('article' => $data));
         } else {
+            $this->view->includeScript("/../../js/ckeditor/ckeditor.js");
+            $this->view->includeScript("/../../js/ckeditor-custom.js");
             $this->view->generate('article/article_add');
         }
     }
@@ -42,6 +38,9 @@ class Controller_Article extends Controller
                 $this->view->generate('article/article', array('article' => $data->fetchAll()));
             } else {
                 $data = $this->model->get_data($this->params['id']);
+                $this->view->includeScript("/../../js/ckeditor/ckeditor.js");
+                $this->view->includeScript("/../../js/ckeditor-custom.js");
+                //$this->view->executeScript('initEditor();');
                 $this->view->generate('article/article_update', array('article' => $data->fetchAll()));
             }
         }
