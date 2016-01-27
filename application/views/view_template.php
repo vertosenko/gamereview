@@ -28,14 +28,19 @@
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
 
-    <!--<script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>-->
-    <!--<script src="../../js/ckeditor/ckeditor.js"></script>
-    <script src="../../js/ckeditor-custom.js"></script>
     <script>
-        jQuery('document').ready(function() {
-            initSample();
+        jQuery('document').ready(function () {
+            ///*
+            jQuery('ul.nav li.dropdown').hover(function () {
+                jQuery(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+            }, function() {
+                jQuery(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+            });
+            //jQuery('ul.nav li.dropdown').hover(function () {
+
+            //});
         });
-    </script>-->
+    </script>
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -70,38 +75,26 @@
 
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                   <!--
-                   <ul class="nav navbar-nav">
-                        <li class="active"><a href="/index/index">Home</a></li>
-                        <li><a href="/article/index">Article </a></li>
-                        <li><a href="/gallery/index">Gallery</a></li>
-                        <?php // if(isLogIn()) : ?>
-                        <li><a href="/links/links">Links</a></li>
-                        <?php //endif; ?>
-                        <?php //if(isAdmin()) :?>
-                        <li><a href="/users/users">Users</a></li>
-                        <?php //endif; ?>
 
-                        <?php //if (!empty($_SESSION['name'])) : ?>
-                        <!--<li><a href="login.php?op=logout">Logout</a></li>
-                        <?php //else : ?>
-                            <li><a href="login.php?op=login">Login</a></li>
-                        <?php //endif; ?>
+                    <?php echo $this->toolBarList ?>
 
-                    </ul>
-                    -->
-                    <?php echo $this->toolBarList?>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/user/login">login</a></li>
-                    </ul>
                 </div>
             </div>
         </nav>
     </div>
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Launch demo modal
+    </button>
+
+
     <div class="container">
         <?php include 'application/views/' . $content_view . '.php'; ?>
     </div>
 
+</div>
+
+<div>
+    <?php include 'application/views/view_popup.php'; ?>
 </div>
 
 </body>

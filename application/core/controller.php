@@ -4,6 +4,7 @@ require_once 'menu.php';
 
 class Controller
 {
+    public $base_path;
     public $model;
     public $view;
     public $controller;
@@ -30,14 +31,18 @@ class Controller
         $this->menu = new Menu();
         $this->rules();
         $this->toolBar();
+
+        global $base_path;
+        $this->base_path = $base_path;
     }
 
     /**
      * @return mixed
      */
     protected function rules() {
+
         $this->rules = $this->menu->prepare_rules($this->controller);
-        echo 0;
+
     }
 
     protected function toolBar(){
@@ -51,11 +56,18 @@ class Controller
      */
     public function checkRules()
     {
+        $u = $this->user->getUser();
+        $r = $this->user->getRole();
+        if($this->user->isLogIn()==FALSE)
+        {
+            $_SESSION['user'] = array('name' => 'default', 'role' => 0);
+        }
         foreach ($this->rules as $action => $role) {
             if ($this->action == 'action_' . $action && $this->user->getRole() >= $role) {
                 return true;
             }
         }
+
     }
 
     // действие (action), вызываемое по умолчанию

@@ -11,7 +11,7 @@ class Menu extends Model
     {
         $controller_name = explode('_',$controller);
         $controller = $controller_name[1];
-        $stmt = $this->db->pdo->query("SELECT url,role FROM navigation_rules WHERE url LIKE '%$controller%'")->fetchAll();
+        $stmt = $this->db->pdo->query("SELECT url,role FROM navigation_rules WHERE url LIKE '/$controller%'")->fetchAll();
 
         $rules = array();
         foreach($stmt as $key => $value)

@@ -9,10 +9,11 @@ class Route
 {
     static public function start()
     {
+
+
         // контроллер и действие по умолчанию
         $controller_name = 'index';
         $action_name = 'index';
-        $param = array ('param_name' => null , 'param_value' => null);
 
         $routes = explode('/', $_SERVER['REQUEST_URI']);
 
@@ -42,15 +43,6 @@ class Route
         $model_name = 'Model_'.$controller_name;
         $controller_name = 'Controller_'.$controller_name;
         $action_name = 'action_'.$action_name;
-        //$param_name = 'paramName_'.$param_name;
-        //$param_value = 'paramValue_'.$param_value;
-
-       // /*
-        echo "Model: $model_name <br>";
-        echo "Controller: $controller_name <br>";
-        echo "Action: $action_name <br>";
-
-      //  */
 
         // подцепл€ем файл с классом модели (файла модели может и не быть)
 
@@ -82,7 +74,12 @@ class Route
         $controller->model = new $model_name();
 
         $action = $action_name;
-        $tmp = $controller->params;
+
+        //if ajax
+        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+            $action = 'ajax_' . $action;
+        }
 
         if(method_exists($controller, $action))
         {

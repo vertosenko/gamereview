@@ -3,15 +3,6 @@
 class Controller_User extends Controller
 {
 
-    function rules()
-    {
-        $this->rules = array(
-            'index' => 0,
-            'login' => 0,
-            'list' => 2
-        );
-    }
-
     function action_index()
     {
         $data = $this->model->get_data();
@@ -31,20 +22,56 @@ class Controller_User extends Controller
                 $this->redirect();
             }
         } else {
+            $this->view->generateToolBar($this->tollBarArray,$this->user->getRole());
             $this->view->generate('user/user');
         }
-        //log in
-        ///*
-
-        //*/
 
     }
 
     function action_logout()
     {
         //@TODO logout();
+        $this->user->logout();
+        $this->redirect();
     }
 
+    function action_register(){
+        if (!empty($this->params['register'])) {
+
+            $base = dirname(dirname(__FILE__));
+            $uploaddir = $base . '\images\gallery\\';
+            $uploadfile = $uploaddir . basename($_FILES['avatar']['name']);
+            move_uploaded_file($_FILES['avatar']['tmp_name'], $uploadfile);
+
+            $this->model->register_user($this->params);
+            $stmt = $this->model->get_user($this->params);
+            $user_details = $stmt->fetch();
+            if (!empty($user_details)) {
+                $this->user->login($user_details);
+                $this->redirect();
+            }
+        } else {
+            $this->view->generateToolBar($this->tollBarArray,$this->user->getRole());
+            $this->view->generate('user/user_register', array('countryList' => $this->model->get_countries()));
+        }
+    }
+
+    function action_profile(){
+        $stmt = $this->model->get_user(array('email' => $this->user->getEmail(), 'pass' => $this->user->getPass()));
+        $user_details = $stmt->fetch();
+
+        if(!empty($user_details))
+        {
+            $this->view->generateToolBar($this->tollBarArray,$this->user->getRole());
+            $this->view->generate('user/user_profile', array('user' => $user_details));
+        }
+        else{
+            $this->view->generateToolBar($this->tollBarArray,$this->user->getRole());
+            $this->view->generate('user/user');
+        }
+
+
+    }
 
     function action_list()
     {
